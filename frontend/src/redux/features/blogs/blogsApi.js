@@ -29,7 +29,7 @@ export const blogApi = createApi({
     }),
     postBlog: builder.mutation({
       query: (newBlog) => ({
-        url: `/blog/create-post`,
+        url: `/blogs/create-post`,
         method: "POST",
         body: newBlog,
         credentials: "include",
@@ -37,7 +37,7 @@ export const blogApi = createApi({
     }),
     updateBlog: builder.mutation({
       query: ({ id, ...rest }) => ({
-        url: `/blog/update-post/${id}`,
+        url: `/blogs/update-post/${id}`,
         method: "PATCH",
         body: rest,
         credentials: "include",
@@ -48,7 +48,6 @@ export const blogApi = createApi({
       query: (id) => ({
         url: `blogs/${id}`,
         method: "DELETE",
-        body: rest,
         credentials: "include"
       }),
       invalidatesTags: (result, error, { id }) => [{ type: 'Blogs', id }],
@@ -61,4 +60,4 @@ export const blogApi = createApi({
 // automatically generates a set of React hooks for each of the endpoints
 // export const {useGetPokemonByNameQuery} = blogApi;
 
-export const { useFetchBlogsQuery, useFetchBlogByIdQuery, useFetchRelatedBlogsQuery, usePostBlogMutation, useUpdateBlogMutation, useDeleteBlogMutation} = blogApi;
+export const { useFetchBlogsQuery, useFetchBlogByIdQuery, useFetchRelatedBlogsQuery, usePostBlogMutation, useUpdateBlogMutation, useDeleteBlogMutation } = blogApi;

@@ -6,6 +6,7 @@ import {RiAdminLine} from 'react-icons/ri'
 import { useFetchBlogsQuery } from '../../../redux/features/blogs/blogsApi'
 import { useGetCommentsQuery } from '../../../redux/features/comments/commentApi'
 import { useGetUserQuery } from '../../../redux/features/auth/authApi'
+import BlogsChart from './BlogsChart'
 
 const Dashboard = () => {
   const [query, setQuery] = useState({search:'', category:''})
@@ -29,6 +30,7 @@ const userCounts = users?.users;
         <p>Welcome to the admin dashboard</p>
         <p>Here you can manage your hotel's posts, manage rooms, and other admin tasks.</p>
       </div>
+
       {/*cards grid*/}
       <div className='flex flex-col md:flex-row justify-center gap-8 pt-8'>
         <div className='bg-indigo-100 py-6 w-full rounded-sm space-y-1 flex flex-col items-center '>
@@ -47,6 +49,11 @@ const userCounts = users?.users;
           <FiUsers className='size-8 text-orange-600'/>
           <p>{comments?.totalComment} Comment{comments?.totalComment !==1 ? 's':'!'}</p>
         </div>
+      </div>
+
+      {/* Graphs and charts */}
+      <div className='pt-5 pb-5'>
+        <BlogsChart blogs={blogs}/>
       </div>
     </div>
     </>

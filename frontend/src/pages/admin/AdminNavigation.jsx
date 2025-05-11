@@ -1,20 +1,25 @@
 import React from 'react'
 import AdminImg from "../../assets/admin.png"
 import { NavLink } from 'react-router-dom'
-import { useLogoutUserMutation } from '../../redux/features/auth/authApi'
+
 import { useDispatch } from 'react-redux'
+import { useLogoutUserMutation } from '../../redux/features/auth/authApi';
+import { logout } from '../../redux/features/auth/authSlice';
+
 
 const AdminNavigation = () => {
-    const [logoutUser] = useLogoutUserMutation();
-    const dispatch = useDispatch();
-    const handleLogout = async() => {
+    const dispatch = useDispatch()
+      
+      const [logoutUser] = useLogoutUserMutation()
+    
+      const handleLogout = async () =>{
         try {
-            await logoutUser().unwrap();
-            dispatch(logout())
+          await logoutUser().unwrap();
+          dispatch(logout())
         } catch (error) {
-            console.error("Failed to logout", error)
+          
         }
-    }
+      }
 
   return (
     <div className='space-y-5 bg-white p-8 md:h-[calc(100vh-98px)] flex flex-col justify-between'>

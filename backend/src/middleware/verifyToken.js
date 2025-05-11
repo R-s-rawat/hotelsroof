@@ -1,27 +1,28 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
-const verifyToken = (req,res,next)=>{
-try {
-  // const token = req.cookies.token;
-  const token = req.headers.authorization?.split(' ')[1]; //Bearer token
-  // console.log(token)
-  if(!token){
-    return res.status(401).send({message:"No token provided"})
-  }
-  const decoded = jwt.verify(token, JWT_SECRET)
-  if(!decoded.userId){
-    return res.status(401).send({message:"Invalid token provided"})
-  }
-  req.userId = decoded.userId;
-  req.role = decoded.role;
-  next();
+const verifyToken = (req, res, next) => {
+    try {
+        const token = req.cookies.token; 
+        // console.log('Token from cookie:', token);
+        //const token = req.headers.authorization?.split(' ')[1]; //Bearer token(testing oK)
+        if (!token) {
+            return res.status(401).send({ message: 'Token not found' });
+        }
 
-} catch (error) {
-  console.error("Error verifying token",error)
-  res.status(401).send({message:"Invalid token"})
-}
-}
+        const decoded = jwt.verify(token, JWT_SECRET);
+        if (!decoded.userId) {
+            return res.status(401).send({ message: 'User ID not found in token' });
+        }
+
+        req.userId = decoded.userId;
+        req.role = decoded.role;
+        next();
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        res.status(401).send({ message: 'Invalid token' });
+    }
+};
 
 module.exports = verifyToken;

@@ -92,7 +92,7 @@ res.status(200).send({
 })
 
 // update a blog post 
-router.patch("/update-post/:id", verifyToken, async(req,res)=>{
+router.patch("/update-post/:id", verifyToken, isAdmin, async(req,res)=>{
 try {
   const postId= req.params.id
   // find by id and update
@@ -116,7 +116,7 @@ try {
 })
 
 //delete a blog
-router.delete("/:id",verifyToken, async(req, res)=>{
+router.delete("/:id",verifyToken, isAdmin, async(req, res)=>{
   try {
     const postId = req.params.id;
     const post = await Blog.findByIdAndDelete(postId);

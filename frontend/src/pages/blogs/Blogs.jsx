@@ -33,7 +33,8 @@ const Blogs = () => {
                         // from MONGO - param(blog._id)
                         <Link key={blog._id} className="shadow-md" 
                         to={`/blogs/${blog._id}`}>
-                        <img src={blog.coverImg} alt="" className="h-80 w-full"/>
+                            {/* // the question mark is must below (optional checking) */}
+                        <img src={blog?.coverImg} alt="" className="h-80 w-full"/>
                         <h2 className="text-xl p-4">{blog.title}</h2>
                         </Link>
                     ))
