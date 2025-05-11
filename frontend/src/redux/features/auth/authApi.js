@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+const API_BASE_URL = process.env.VITE_BACKEND_URL;
+
 const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:5000/api/auth",
+        baseUrl: `${API_BASE_URL}/api/auth`,
         credentials: "include",
     }),
     endpoints: (builder) => ({
