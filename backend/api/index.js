@@ -18,8 +18,8 @@ app.use(cors({
 }));
 
 const authRoutes = require('./src/routes/auth.user');
-const blogRoutes = require('../src/routes/blog.route');
-const commentRoutes = require('../src/routes/comment.route');
+const blogRoutes = require('../src/routes/blog.routee');
+const commentRoutes = require('../src/routes/comment.routee');
 
 // Routes setup
 app.use('/api/auth', authRoutes);
