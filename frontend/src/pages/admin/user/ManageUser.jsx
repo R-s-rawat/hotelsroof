@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDeleteUserMutation, useGetUserQuery } from "../../../redux/features/auth/authApi.js"
 import { MdModeEdit } from "react-icons/md"
 import { useNavigate } from 'react-router-dom'
-import {UpdateUserModal} from './UpdateUserModal.jsx'
+import UpdateUserModal from './UpdateUserModal.jsx'
 
 const ManageUser = () => {
   const [selectedUser, setSelectedUser] = useState(null)
