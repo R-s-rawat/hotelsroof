@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `${API_BASE_URL}/api/auth`,
+        baseUrl: `${API_BASE_URL}/auth`,
         credentials: "include",
     }),
     endpoints: (builder) => ({

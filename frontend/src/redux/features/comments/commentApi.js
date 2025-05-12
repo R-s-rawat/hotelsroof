@@ -6,7 +6,7 @@ const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
     const commentApi = createApi({
         reducerPath: "commentApi",
         baseQuery: fetchBaseQuery({
-            baseUrl: `${API_BASE_URL}/api/comments`,
+            baseUrl: `${API_BASE_URL}/comments`,
             credentials: "include"
         }),
         tagTypes: ["Comments"],
