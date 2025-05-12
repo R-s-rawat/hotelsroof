@@ -1,7 +1,7 @@
     import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // 1 mistake of react library - not imported correctly
 
-const API_BASE_URL = process.env.VITE_BACKEND_URL;
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
     const commentApi = createApi({
         reducerPath: "commentApi",

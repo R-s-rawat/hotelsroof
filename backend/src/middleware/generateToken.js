@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../model/user.model');
-const JWT_SECRET = process.env.JWT_SECRET_KEY;
+const JWT_SECRET = import.meta.env.JWT_SECRET_KEY;
 
 const generateToken = async(userId) =>{
 try {
