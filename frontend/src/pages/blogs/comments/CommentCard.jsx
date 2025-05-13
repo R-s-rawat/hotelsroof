@@ -1,10 +1,19 @@
 import React from 'react'
 import commentorIcon from "../../../assets/commentor.png"
-import { formatDate } from '../../../../../backend/src/utilis/formateDate'
+
 import PostAComment from './PostAComment'
 import { useSelector } from 'react-redux'
 
 const CommentCard = ({comments}) => {
+
+    const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString('en-Us',{
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+    })
+}
     const user = useSelector((state)=>state.auth.user)
   return (
     <div className='my-6 bg-white p-8'>
