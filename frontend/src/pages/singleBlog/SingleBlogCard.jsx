@@ -1,11 +1,21 @@
 import React from 'react'
-import { formatDate } from '../../../../backend/src/utilis/formateDate';
+
 import EditorJSHTML from 'editorjs-html';
 
 // const editorJSHTML = EditorJSHTML();
 
 // TODO: need to add proper props and validate data before rendering.
 const SingleBlogCard = ({blog}) => {
+
+   const formatDate = (isoDate) => {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString('en-Us',{
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+    })
+}
+
     const {title,description,content,coverImg,category,rating,author,createdAt} = blog || {};
     // const htmlContent = editorJSHTML.parse(content).join('');
 
