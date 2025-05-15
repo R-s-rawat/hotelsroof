@@ -9,6 +9,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 //       }),
 //     }),
 //   });
+const token = localStorage.getItem('token');
+
 export const blogApi = createApi({
   reducerPath: 'blogsApi',
   baseQuery: fetchBaseQuery({
@@ -39,7 +41,11 @@ export const blogApi = createApi({
       query: ({ id, ...rest }) => ({
         url: `/blogs/update-post/${id}`,
         method: "PATCH",
-        body: rest,
+          headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  },
+        body: JSON.stringify(rest),
         credentials: "include",
       }),
       invalidatesTags: (result, error, { id }) => [{ type: 'Blogs', id }],

@@ -4,7 +4,8 @@ import { useDeleteBlogMutation, useFetchBlogsQuery } from '../../../redux/featur
 import { formatDate } from '../../../utilis/formateDate';
 import {MdModeEdit} from "react-icons/md"
 
-const ManagePosts = () => {
+const ManagePosts = () => { 
+  const token = localStorage.getItem('token');
   const [query, setQuery] = useState({ search: '', category: '' })
   const { data: blogs = [], error, isLoading, refetch } = useFetchBlogsQuery(query);
   const [deleteBlog] = useDeleteBlogMutation()
@@ -14,6 +15,7 @@ const ManagePosts = () => {
 
 ///////////////
   const handleDelete = async(id) => {
+   
     try {
       const response = await deleteBlog(id).unwrap();
       alert(response.message)
