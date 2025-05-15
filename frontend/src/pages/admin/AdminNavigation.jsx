@@ -10,14 +10,14 @@ import { logout } from '../../redux/features/auth/authSlice';
 const AdminNavigation = () => {
     const dispatch = useDispatch()
       
-      const [logoutUser] = useLogoutUserMutation()
+    const [logoutUser] = useLogoutUserMutation()
     
-      const handleLogout = async () =>{
+    const handleLogout = async () =>{
         try {
           await logoutUser().unwrap();
           dispatch(logout())
         } catch (error) {
-          
+            
         }
       }
 

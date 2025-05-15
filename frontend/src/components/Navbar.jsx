@@ -37,6 +37,20 @@ const Navbar = () => {
     }
   }
 
+    // 🧠 Auto-close the menu after 3 seconds
+  useEffect(() => {
+    let timer;
+    if (isMenuOpen) {
+      timer = setTimeout(() => {
+        setIsMenuOpen(false);
+        console.log("Mobile menu auto-closed after 3 seconds");
+      }, 3000);
+    }
+
+    // Cleanup timeout on unmount or when isMenuOpen changes
+    return () => clearTimeout(timer);
+  }, [isMenuOpen]);
+
   return (
     <header className='bg-white py-6 border'>
       <nav className='container mx-auto flex justify-between px-5'>
