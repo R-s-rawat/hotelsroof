@@ -28,7 +28,7 @@ const Login = () => {
       const response = await loginUser(data).unwrap()
       console.log(response)
       const {token, user} = response;
-      // localStorage.setItem('token', token);
+       localStorage.setItem('token', token);
       // after login, you have to dispatch an
       //  action to set user to local storage
       dispatch(setUser({ user }));
