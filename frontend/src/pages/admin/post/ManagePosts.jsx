@@ -5,7 +5,7 @@ import { formatDate } from '../../../utilis/formateDate';
 import {MdModeEdit} from "react-icons/md"
 
 const ManagePosts = () => { 
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   const [query, setQuery] = useState({ search: '', category: '' })
   const { data: blogs = [], error, isLoading, refetch } = useFetchBlogsQuery(query);
   const [deleteBlog] = useDeleteBlogMutation()

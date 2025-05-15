@@ -7,8 +7,7 @@ import Header from '@editorjs/header';
 import { useFetchBlogByIdQuery, usePostBlogMutation, useUpdateBlogMutation } from "../../../redux/features/blogs/blogsApi";
 
 const UpdatePost = () => {
-  const token = localStorage.getItem('token');
-
+    // const token = localStorage.getItem('token');
   const { id } = useParams()
   const editorRef = useRef(null);
   const [title, setTitle] = useState("");

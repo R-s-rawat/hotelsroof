@@ -28,10 +28,11 @@ const Login = () => {
       const response = await loginUser(data).unwrap()
       console.log(response)
       const {token, user} = response;
-      localStorage.setItem('token', token);
+      // localStorage.setItem('token', token);
       // after login, you have to dispatch an
       //  action to set user to local storage
       dispatch(setUser({ user }));
+      document.cookie = `token=${token}; path=/; max-age=3600`; // 1 hour (THE ERROR OF BACKEND NOT GETTING TOKEN)
       alert("Login successful")
       navigate('/')
     } catch (error) {
