@@ -13,7 +13,14 @@ export const blogApi = createApi({
   reducerPath: 'blogsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_BACKEND_URL,
-    credentials: 'include'
+    credentials: 'include',
+      prepareHeaders: (headers) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
   }),
   tagTypes: ['Blogs'],
   endpoints: (builder) => ({

@@ -7,6 +7,13 @@ const authApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: `${API_BASE_URL}/auth`,
         credentials: "include",
+        prepareHeaders: (headers) => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        },
     }),
     endpoints: (builder) => ({
         registerUser: builder.mutation({
@@ -44,10 +51,10 @@ const authApi = createApi({
             }),
         }),
         updateUserRole: builder.mutation({
-            query: ({userId, role}) => ({
+            query: ({ userId, role }) => ({
                 url: `/users/${userId}`,
                 method: "PUT",
-                body: {role},
+                body: { role },
             }),
             refetchOnMount: true,
             invalidatesTags: ["User"],
@@ -55,6 +62,6 @@ const authApi = createApi({
     })
 })
 
-export const {useRegisterUserMutation, useLoginUserMutation, useLogoutUserMutation, useGetUserQuery, useDeleteUserMutation, useUpdateUserRoleMutation, } = authApi;
+export const { useRegisterUserMutation, useLoginUserMutation, useLogoutUserMutation, useGetUserQuery, useDeleteUserMutation, useUpdateUserRoleMutation, } = authApi;
 
 export default authApi;
