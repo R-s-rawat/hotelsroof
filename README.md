@@ -8,7 +8,7 @@
 // after login - user(!admin)
 ![hotelsroof homepage after normal user login 3rd img](https://github.com/user-attachments/assets/8f1481f2-68bb-4bbb-9a78-65d7b3dc9d8a)
 
-// after login - admin (create, update, delete blogs)
+// after login - admin (create, update, delete blogs) - by creativeTim dashboard
 ![hotelsroof admin dashboard 4th](https://github.com/user-attachments/assets/faf3e8ed-685a-4c7e-8193-e829233be2b1)
 
 // hotelsroof add blog 
