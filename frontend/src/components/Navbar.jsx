@@ -61,20 +61,19 @@ const Navbar = () => {
           {user ? (
             <li className="flex items-center gap-3">
               <img src={avatarImg} alt="User avatar" className="size-8" />
-              {user.role === "admin" ? (
+              {user.role === "admin" && (
                 <Link to="/dashboard">
                   <button className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm">
                     Dashboard
                   </button>
                 </Link>
-              ) : (
-                <button
-                  onClick={handleLogout}
-                  className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm"
-                >
-                  Logout
-                </button>
               )}
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 px-4 py-1.5 text-white rounded-sm"
+              >
+                Logout
+              </button>
             </li>
           ) : (
             <li>
@@ -118,20 +117,22 @@ const Navbar = () => {
 
           <li className="px-4 mt-5">
             {user ? (
-              user.role === "admin" ? (
-                <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                  Dashboard
-                </Link>
-              ) : (
+              <>
+                {user.role === "admin" && (
+                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                    <span className="block text-blue-600 mb-2">Dashboard</span>
+                  </Link>
+                )}
                 <button
                   onClick={() => {
                     handleLogout();
                     setIsMenuOpen(false);
                   }}
+                  className="block text-red-600"
                 >
                   Logout
                 </button>
-              )
+              </>
             ) : (
               <NavLink
                 to="/login"

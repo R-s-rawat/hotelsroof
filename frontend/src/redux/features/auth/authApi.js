@@ -1,12 +1,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+const API =
+  import.meta.env.MODE === "production"
+    ? import.meta.env.VITE_BACKEND_URL
+    : "http://localhost:5000/api";
 
 const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${API_BASE_URL}/auth`,
-    credentials: "include",
+    baseUrl: `${API}/auth`,
+    credentials: "include", // allow cookies to be sent with requests
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {
@@ -41,8 +44,8 @@ const authApi = createApi({
         url: "/users",
         method: "GET",
       }),
-      refetchOnMount: true,
-      invalidatesTags: ["User"],
+      refetchOnMountOrArgChange: true,
+      providesTags: ["User"],
     }),
     deleteUser: builder.mutation({
       query: (userId) => ({
@@ -56,7 +59,6 @@ const authApi = createApi({
         method: "PUT",
         body: { role },
       }),
-      refetchOnMount: true,
       invalidatesTags: ["User"],
     }),
   }),
