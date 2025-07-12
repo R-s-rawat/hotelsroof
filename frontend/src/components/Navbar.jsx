@@ -32,7 +32,7 @@ const Navbar = () => {
     }
   };
 
-  // Auto-close mobile menu on route change
+  // Auto-close menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location.pathname]);
@@ -57,23 +57,31 @@ const Navbar = () => {
             </li>
           ))}
 
-          {/* Auth Actions */}
           {user ? (
             <li className="flex items-center gap-3">
               <img src={avatarImg} alt="User avatar" className="size-8" />
-              {user.role === "admin" && (
-                <Link to="/dashboard">
-                  <button className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm">
-                    Dashboard
+              {user.role === "admin" ? (
+                <>
+                  <Link to="/dashboard">
+                    <button className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm">
+                      Dashboard
+                    </button>
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="bg-red-600 px-4 py-1.5 text-white rounded-sm ml-2"
+                  >
+                    Logout
                   </button>
-                </Link>
+                </>
+              ) : (
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm"
+                >
+                  Logout
+                </button>
               )}
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 px-4 py-1.5 text-white rounded-sm"
-              >
-                Logout
-              </button>
             </li>
           ) : (
             <li>
@@ -84,7 +92,7 @@ const Navbar = () => {
           )}
         </ul>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Toggle */}
         <div className="flex items-center sm:hidden">
           <button
             onClick={toggleMenu}
@@ -106,8 +114,8 @@ const Navbar = () => {
           {navLists.map((list, index) => (
             <li className="mt-5 px-4" key={index}>
               <NavLink
-                onClick={() => setIsMenuOpen(false)}
                 to={list.path}
+                onClick={() => setIsMenuOpen(false)}
                 className={getNavLinkClass}
               >
                 {list.name}
@@ -115,12 +123,16 @@ const Navbar = () => {
             </li>
           ))}
 
-          <li className="px-4 mt-5">
+          <li className="px-4 mt-5 space-y-2">
             {user ? (
               <>
                 {user.role === "admin" && (
-                  <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
-                    <span className="block text-blue-600 mb-2">Dashboard</span>
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block w-full py-2 text-blue-600 hover:underline"
+                  >
+                    Dashboard
                   </Link>
                 )}
                 <button
@@ -128,7 +140,7 @@ const Navbar = () => {
                     handleLogout();
                     setIsMenuOpen(false);
                   }}
-                  className="block text-red-600"
+                  className="block w-full py-2 text-left text-red-600 hover:underline"
                 >
                   Logout
                 </button>
@@ -137,7 +149,7 @@ const Navbar = () => {
               <NavLink
                 to="/login"
                 onClick={() => setIsMenuOpen(false)}
-                className={getNavLinkClass}
+                className="block w-full py-2 text-left text-gray-700 hover:underline"
               >
                 Login
               </NavLink>
