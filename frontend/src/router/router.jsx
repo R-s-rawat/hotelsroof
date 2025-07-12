@@ -18,63 +18,68 @@ import UpdatePost from "../pages/admin/post/UpdatePost";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
-    children:[
+    element: <App />,
+    children: [
       {
-        path:"/",
-        element:<Home/>
+        path: "/",
+        element: <Home />,
       },
       {
-        path:"/about-us",
-        element:<About/>
+        path: "/about-us",
+        element: <About />,
       },
       {
-        path:"contact-us",
-        element:<ContactUs/>
+        path: "contact-us",
+        element: <ContactUs />,
       },
       {
-        path:"privacy-policy",
-        element:<PrivacyPolicy/>
+        path: "privacy-policy",
+        element: <PrivacyPolicy />,
       },
       {
         path: "blogs/:id",
-        element: <SingleBlog/>
-      },{
+        element: <SingleBlog />,
+      },
+      {
         path: "/login",
-        element: <Login/>
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register/>
+        element: <Register />,
       },
       {
         path: "/dashboard",
-        // element: <AdminLayout/>, //it will be protected by the admin: Use Private Routes 
-        element: <PrivateRouter><AdminLayout/></PrivateRouter>,
+        // element: <AdminLayout/>, //it will be protected by the admin: Use Private Routes
+        element: (
+          <PrivateRouter>
+            <AdminLayout />
+          </PrivateRouter>
+        ),
         children: [
           {
-            path:'',
-            element:<Dashboard/>
+            path: "",
+            element: <Dashboard />,
           },
           {
-            path:"add-new-post",
-            element:<AddPost/>
+            path: "add-new-post",
+            element: <AddPost />,
           },
           {
-            path:"manage-items",
-            element:<ManagePosts/>
+            path: "manage-items",
+            element: <ManagePosts />,
           },
           {
-            path:"users",
-            element:<ManageUser/>
+            path: "users",
+            element: <ManageUser />,
           },
           {
             path: "update-items/:id",
-            element: <UpdatePost/>
-          }
-        ]
-      }
-    ]
+            element: <UpdatePost />,
+          },
+        ],
+      },
+    ],
   },
 ]);
 
