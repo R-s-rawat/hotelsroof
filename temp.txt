@@ -1,0 +1,21 @@
+// the project src sub-divisons..
+1-assets (.jpg, .png)
+
+2-components (navbar, spinner)
+
+3-pages 
+(
+admin (adminLayout/adminNavigation & dashboard->(blogsChart,Dashboard), post->crud..,user->crud..)
+/blogs (blogs, searchBlog & comments->(commentCard, postAComment))
+/home (hero, home)
+/miniPage(s) (about, contactUs, privacyPolicy)
+/singleBlog (singleBlog, singleBlogCard, relatedBlogs)
+/user (login, register)
+)
+
+4-redux store.js &(features->auth->authApi/authSlice,features->blogs->blogsApi,features->comments..
+)
+
+5-router (privateRouter & router)
+
+6-utilis (formatDate/-)
