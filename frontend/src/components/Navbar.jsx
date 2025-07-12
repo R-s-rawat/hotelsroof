@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { IoClose, IoMenuSharp } from "react-icons/io5";
 
@@ -16,93 +16,80 @@ const navLists = [
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // after login, you have to dispatch an action to set user to local storage
   const { user } = useSelector((state) => state.auth);
-
-  console.log("the user is:", user);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const dispatch = useDispatch();
-
   const [logoutUser] = useLogoutUserMutation();
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLogout = async () => {
     try {
       await logoutUser().unwrap();
       dispatch(logout());
-    } catch (error) {}
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
   };
 
-  // 🧠 Auto-close the menu after 3 seconds
+  // Auto-close mobile menu on route change
   useEffect(() => {
-    let timer;
-    if (isMenuOpen) {
-      timer = setTimeout(() => {
-        setIsMenuOpen(false);
-        console.log("Mobile menu auto-closed after 3 seconds");
-      }, 3000);
-    }
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
-    // Cleanup timeout on unmount or when isMenuOpen changes
-    return () => clearTimeout(timer);
-  }, [isMenuOpen]);
+  const getNavLinkClass = ({ isActive }) =>
+    isActive ? "text-blue-600 font-semibold" : "text-gray-700";
 
   return (
-    <header className="bg-white py-6 border">
+    <header className="bg-white py-6 border shadow-sm">
       <nav className="container mx-auto flex justify-between px-5">
-        <a href="/">
-          <img src="/logo.png" alt="" className="h-12" />
-        </a>
+        <Link to="/" aria-label="Go to homepage">
+          <img src="/logo.png" alt="Site Logo" className="h-12" />
+        </Link>
+
+        {/* Desktop Menu */}
         <ul className="sm:flex hidden items-center gap-8">
           {navLists.map((list, index) => (
             <li key={index}>
-              <NavLink
-                to={`${list.path}`}
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
+              <NavLink to={list.path} className={getNavLinkClass}>
                 {list.name}
               </NavLink>
             </li>
           ))}
 
-          {/* render btn based on user login activity */}
-
-          {/* after login, you have to dispatch 
-          an action to set user to local storage */}
-
-          {user && user.role === "user" ? (
+          {/* Auth Actions */}
+          {user ? (
             <li className="flex items-center gap-3">
-              <img src={avatarImg} alt="" className="size-8" />
-              <button
-                onClick={handleLogout}
-                className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm"
-              >
-                Logout
-              </button>
+              <img src={avatarImg} alt="User avatar" className="size-8" />
+              {user.role === "admin" ? (
+                <Link to="/dashboard">
+                  <button className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm">
+                    Dashboard
+                  </button>
+                </Link>
+              ) : (
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm"
+                >
+                  Logout
+                </button>
+              )}
             </li>
           ) : (
             <li>
-              <NavLink to="/login">Login</NavLink>
-            </li>
-          )}
-
-          {user && user.role === "admin" && (
-            <li className="flex items-center gap-3">
-              <img src={avatarImg} alt="" className="size-8" />
-              <Link to="/dashboard">
-                <button className="bg-[#1E73BE] px-4 py-1.5 text-white rounded-sm">
-                  Dashboard
-                </button>
-              </Link>
+              <NavLink to="/login" className={getNavLinkClass}>
+                Login
+              </NavLink>
             </li>
           )}
         </ul>
 
-        {/* toggle menu */}
+        {/* Mobile Menu Toggle */}
         <div className="flex items-center sm:hidden">
           <button
             onClick={toggleMenu}
+            aria-label="Toggle navigation menu"
             className="flex items-center px-3 py-4 bg-[#fafafa] rounded text-sm text-gray-500 hover:text-gray-900"
           >
             {isMenuOpen ? (
@@ -114,22 +101,46 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* mobile menu items*/}
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <ul className="fixed top-[108px] left-0 w-full h-auto pb-8 border-b bg-white shadow-sm z-50">
+        <ul className="fixed top-[108px] left-0 w-full bg-white border-b shadow-md pb-8 z-50 transition-all duration-300">
           {navLists.map((list, index) => (
             <li className="mt-5 px-4" key={index}>
               <NavLink
                 onClick={() => setIsMenuOpen(false)}
-                to={`${list.path}`}
-                className={({ isActive }) => (isActive ? "active" : "")}
+                to={list.path}
+                className={getNavLinkClass}
               >
                 {list.name}
               </NavLink>
             </li>
           ))}
+
           <li className="px-4 mt-5">
-            <NavLink to="/login">Login</NavLink>
+            {user ? (
+              user.role === "admin" ? (
+                <Link to="/dashboard" onClick={() => setIsMenuOpen(false)}>
+                  Dashboard
+                </Link>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  Logout
+                </button>
+              )
+            ) : (
+              <NavLink
+                to="/login"
+                onClick={() => setIsMenuOpen(false)}
+                className={getNavLinkClass}
+              >
+                Login
+              </NavLink>
+            )}
           </li>
         </ul>
       )}
