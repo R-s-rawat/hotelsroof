@@ -29,7 +29,8 @@ const Login = () => {
       alert("Login successful");
       navigate("/");
     } catch (error) {
-      setMessage("Please provide a valid email and password");
+      setMessage('Login Failed');
+      alert('Login Failed');
     }
   };
 

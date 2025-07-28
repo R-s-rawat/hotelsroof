@@ -26,12 +26,23 @@ const Blogs = () => {
       />
 
       {isLoading && <Spinner />}
-      {error && <div className="text-red-500 text-center py-4">{error.toString()}</div>}
+
+      {error && (
+        <div className="text-red-500 text-center py-4">
+          {error.status === "FETCH_ERROR"
+            ? "Unable to connect to the server. Please check your internet or try again later."
+            : error?.data?.message || "An unexpected error occurred."}
+        </div>
+      )}
 
       <div className="mt-8 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-8">
         {blogs.map((blog) => (
           <Link key={blog._id} className="shadow-md" to={`/blogs/${blog._id}`}>
-            <img src={blog?.coverImg} alt="" className="h-80 w-full object-cover" />
+            <img
+              src={blog?.coverImg}
+              alt=""
+              className="h-80 w-full object-cover"
+            />
             <h2 className="text-xl p-4">{blog.title}</h2>
           </Link>
         ))}
